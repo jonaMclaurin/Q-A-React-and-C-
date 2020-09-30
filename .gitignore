@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-=======
-.vscode/
->>>>>>> 396d056933e25b1e887275627ccb4d284e83aac9
+
+!.vscode/extensions.json
