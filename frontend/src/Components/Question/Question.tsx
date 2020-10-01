@@ -3,7 +3,9 @@ import { FC } from 'react';
 import { css, jsx } from '@emotion/core';
 import { QuestionData } from '../../Data/QuestionsData';
 import { gray3, gray2 } from '../../Styles/Styles';
+// eslint-disable-next-line
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface Props {
   data: QuestionData;
@@ -22,7 +24,18 @@ export const Question: FC<Props> = ({ data, showContent = true }) => (
         font-size: 19px;
       `}
     >
-      {data.title}
+      <Link
+        css={css`
+          text-decoration: none;
+          color: ${gray2};
+          :hover {
+            color: #000;
+          }
+        `}
+        to={`questions/${data.questionId}`}
+      >
+        {data.title}
+      </Link>
     </div>
     {showContent && (
       <div

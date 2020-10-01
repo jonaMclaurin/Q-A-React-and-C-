@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 // eslint-disable-next-line
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 
 import { PrimaryButton } from '../../Styles/Styles';
 import { QuestionList } from '../QuestionList/QuestionList';
@@ -9,7 +10,7 @@ import { getUnansweredQuestions, QuestionData } from '../../Data/QuestionsData';
 import { Page } from '../../Components/Page/Page';
 import { PageTitle } from '../../Components/Page/PageTitle';
 
-export const HomePage = () => {
+export const HomePage: FC<RouteComponentProps> = ({ history }) => {
   const [questions, setQuestions] = useState<QuestionData[] | null>(null);
   const [questionsLoading, setQuestionsLoading] = useState(true);
 
@@ -23,7 +24,7 @@ export const HomePage = () => {
   }, []);
 
   const handleAskQuestion = () => {
-    console.log('TODO - move to the AskPage');
+    history.push('/ask');
   };
   return (
     <Page>

@@ -36,4 +36,7 @@ export const PrimaryButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
+  :active {
+    transform: scale(0.96);
+  }
 `;
