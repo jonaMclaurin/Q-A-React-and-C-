@@ -5,15 +5,11 @@ import React from 'react';
 import { PrimaryButton } from '../../Styles/Styles';
 import { QuestionList } from '../QuestionList/QuestionList';
 import { getUnansweredQuestions } from '../../Data/QuestionsData';
+import { Page } from '../../Components/Page/Page';
+import { PageTitle } from '../../Components/Page/PageTitle';
 
 export const HomePage = () => (
-  <div
-    css={css`
-      margin: 50px auto 20px auto;
-      padding: 30px 20px;
-      max-width: 600px;
-    `}
-  >
+  <Page>
     <div
       css={css`
         display: flex;
@@ -21,19 +17,9 @@ export const HomePage = () => (
         justify-content: space-between;
       `}
     >
-      <h2
-        css={css`
-          font-size: 15px;
-          font-weight: bold;
-          margin: 10px 0px 5px;
-          text-align: center;
-          text-transform: uppercase;
-        `}
-      >
-        Unanswered Questions
-      </h2>
+      <PageTitle> Unanswered Questions </PageTitle>
       <PrimaryButton> Ask a Question </PrimaryButton>
     </div>
-    <QuestionList data={getUnansweredQuestions()} />
-  </div>
+    {/* <QuestionList data={getUnansweredQuestions()} /> */}
+  </Page>
 );
