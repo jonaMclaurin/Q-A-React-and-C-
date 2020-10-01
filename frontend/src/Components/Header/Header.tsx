@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import { fontFamily, fontSize, gray1, gray2, gray5 } from '../../Styles/Styles';
+// eslint-disable-next-line
 import React from 'react';
 import { UserIcon } from '../Icons/Icons';
 

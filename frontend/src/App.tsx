@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+// eslint-disable-next-line
 import React from 'react';
 
 import { Header } from './Components/Header/Header';

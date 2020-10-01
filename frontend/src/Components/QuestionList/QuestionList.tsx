@@ -1,6 +1,7 @@
 import { FC } from 'react';
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
+// eslint-disable-next-line
 import React from 'react';
 
 import { gray5, accent2 } from '../../Styles/Styles';
