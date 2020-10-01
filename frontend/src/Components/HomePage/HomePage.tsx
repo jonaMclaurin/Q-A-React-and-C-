@@ -21,7 +21,10 @@ export const HomePage = () => {
     };
     doGetUnansweredQuestions();
   }, []);
-  console.log('rerendered');
+
+  const handleAskQuestion = () => {
+    console.log('TODO - move to the AskPage');
+  };
   return (
     <Page>
       <div
@@ -32,7 +35,9 @@ export const HomePage = () => {
         `}
       >
         <PageTitle> Unanswered Questions </PageTitle>
-        <PrimaryButton> Ask a Question </PrimaryButton>
+        <PrimaryButton onClick={handleAskQuestion}>
+          Ask a Question
+        </PrimaryButton>
       </div>
       {questionsLoading ? (
         <div
