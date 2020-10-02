@@ -7,6 +7,7 @@ import { css, jsx } from '@emotion/core';
 import { gray3, gray6 } from '../../Styles/Styles';
 
 import { QuestionData, getQuestion } from '../../Data/QuestionsData';
+import { AnswerList } from '../../Components/AnswerList/AnswerList';
 
 interface RouteParams {
   questionId: string;
@@ -48,6 +49,30 @@ export const QuestionPage: FC<RouteComponentProps<RouteParams>> = ({
         >
           {question === null ? '' : question.title}
         </div>
+        {question !== null && (
+          <Fragment>
+            <p
+              css={css`
+                margin-top: 0px;
+                background-color: white;
+              `}
+            >
+              {question.content}
+            </p>
+            <div
+              css={css`
+                font-size: 12px;
+                font-style: italic;
+                color: ${gray3};
+              `}
+            >
+              {`Asked by ${question.userName} on
+             ${question.created.toLocaleDateString()}
+             ${question.created.toLocaleTimeString()}`}
+            </div>
+            <AnswerList data={question.answers} />
+          </Fragment>
+        )}
       </div>
     </Page>
   );
