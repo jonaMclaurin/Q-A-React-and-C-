@@ -15,13 +15,29 @@ interface FormContextProps {
 
 interface Props {
   submitCaption?: string;
+  validationRules?: ValidationProp;
+}
+
+interface Validation {
+  validator: Validator;
+  arg?: any;
+}
+
+interface ValidationProp {
+  [key: string]: Validation | Validation[];
 }
 
 export const FormContext = createContext<FormContextProps>({
   values: {},
 });
 
-export const Form: FC<Props> = ({ submitCaption, children }) => {
+type Validator = (value: any, args?: any) => string;
+
+export const Form: FC<Props> = ({
+  submitCaption,
+  children,
+  validationRules,
+}) => {
   const [values, setValues] = useState<Values>({});
   return (
     <FormContext.Provider
@@ -59,3 +75,13 @@ export const Form: FC<Props> = ({ submitCaption, children }) => {
     </FormContext.Provider>
   );
 };
+
+export const required: Validator = (value: any): string =>
+  value === undefined || value === null || value === ''
+    ? 'This must be populated'
+    : '';
+
+export const minLength: Validator = (value: any, length: number): string =>
+  value && value.length < length
+    ? `This must be at least ${length} characters`
+    : '';

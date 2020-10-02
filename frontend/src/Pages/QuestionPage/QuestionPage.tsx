@@ -8,6 +8,8 @@ import { gray3, gray6 } from '../../Styles/Styles';
 
 import { QuestionData, getQuestion } from '../../Data/QuestionsData';
 import { AnswerList } from '../../Components/AnswerList/AnswerList';
+import { Form } from '../../Components/Form/Form';
+import { Field } from '../../Components/Field/Field';
 
 interface RouteParams {
   questionId: string;
@@ -71,6 +73,15 @@ export const QuestionPage: FC<RouteComponentProps<RouteParams>> = ({
              ${question.created.toLocaleTimeString()}`}
             </div>
             <AnswerList data={question.answers} />
+            <div
+              css={css`
+                margin-top: 20px;
+              `}
+            >
+              <Form submitCaption="Submit Your Answer">
+                <Field name="content" label="Your Answer" type="TextArea" />
+              </Form>
+            </div>
           </Fragment>
         )}
       </div>
