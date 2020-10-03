@@ -4,8 +4,17 @@ import {
   postQuestion,
   PostQuestionData,
 } from '../Data/QuestionsData';
-import { Action, ActionCreator, Dispatch } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import {
+  Action,
+  ActionCreator,
+  Dispatch,
+  Reducer,
+  combineReducers,
+  Store,
+  createStore,
+  applyMiddleware,
+} from 'redux';
+import thunk, { ThunkAction } from 'redux-thunk';
 
 interface QuestionsState {
   readonly loading: boolean;
@@ -73,3 +82,56 @@ export const postQuestionActionCreator: ActionCreator<ThunkAction<
     dispatch(postedQuestionAction);
   };
 };
+
+export const clearPostedQuestionActionCreator: ActionCreator<PostedQuestionAction> = () => {
+  const postedQuestionAction: PostedQuestionAction = {
+    type: 'PostedQuestion',
+    result: undefined,
+  };
+  return postedQuestionAction;
+};
+
+const neverReached = (never: never) => {};
+
+const questionsReducer: Reducer<QuestionsState, QuestionsActions> = (
+  state = initialQuestionState,
+  action,
+) => {
+  switch (action.type) {
+    case 'GettingUnansweredQuestions': {
+      return {
+        ...state,
+        unanswered: null,
+        loading: true,
+      };
+    }
+    case 'GotUnansweredQuestions': {
+      return {
+        ...state,
+        unanswered: action.questions,
+        loading: false,
+      };
+    }
+    case 'PostedQuestion': {
+      return {
+        ...state,
+        unanswered: action.result
+          ? (state.unanswered || []).concat(action.result)
+          : state.unanswered,
+        postedResult: action.result,
+      };
+    }
+    default:
+      neverReached(action);
+  }
+  return state;
+};
+
+const rootReducer = combineReducers<AppState>({
+  questions: questionsReducer,
+});
+
+export function configureStore(): Store<AppState> {
+  const store = createStore(rootReducer, undefined, applyMiddleware(thunk));
+  return store;
+}
