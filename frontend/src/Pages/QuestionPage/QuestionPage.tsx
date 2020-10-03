@@ -6,9 +6,13 @@ import { RouteComponentProps } from 'react-router-dom';
 import { css, jsx } from '@emotion/core';
 import { gray3, gray6 } from '../../Styles/Styles';
 
-import { QuestionData, getQuestion } from '../../Data/QuestionsData';
+import {
+  QuestionData,
+  getQuestion,
+  postAnswer,
+} from '../../Data/QuestionsData';
 import { AnswerList } from '../../Components/AnswerList/AnswerList';
-import { Form } from '../../Components/Form/Form';
+import { Form, required, minLength, Values } from '../../Components/Form/Form';
 import { Field } from '../../Components/Field/Field';
 
 interface RouteParams {
@@ -30,6 +34,16 @@ export const QuestionPage: FC<RouteComponentProps<RouteParams>> = ({
       doGetQuestion(questionId);
     }
   }, [match.params.questionId]);
+
+  const handleSubmit = async (values: Values) => {
+    const result = await postAnswer({
+      questionId: question!.questionId,
+      content: values.content,
+      userName: 'Fred',
+      created: new Date(),
+    });
+    return { success: result ? true : false };
+  };
 
   return (
     <Page>
@@ -78,7 +92,18 @@ export const QuestionPage: FC<RouteComponentProps<RouteParams>> = ({
                 margin-top: 20px;
               `}
             >
-              <Form submitCaption="Submit Your Answer">
+              <Form
+                validationRules={{
+                  content: [
+                    { validator: required },
+                    { validator: minLength, arg: 50 },
+                  ],
+                }}
+                onSubmit={handleSubmit}
+                failureMessage="There was a problem with your answer"
+                successMessage="Your answer was successfully submitted"
+                submitCaption="Submit Your Answer"
+              >
                 <Field name="content" label="Your Answer" type="TextArea" />
               </Form>
             </div>
