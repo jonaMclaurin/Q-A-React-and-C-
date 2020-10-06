@@ -48,6 +48,7 @@ namespace QandA
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
             });
         }
     }
