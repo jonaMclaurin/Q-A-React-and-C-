@@ -15,14 +15,21 @@ namespace QandA.Data
 
         public DataRepository(IConfiguration configuration)
         {
-            var builder = new SqlConnectionStringBuilder(configuration["ConnectionStrings:DefaultConnection"]);
-            builder.Password = configuration["DbPassword"];
-            _connectionString = builder.ConnectionString;
+            
+            _connectionString = configuration["ConnectionStrings:DefaultConnection"];
         }
 
         public void DeleteQuestion(int questionId)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                connection.Execute(
+                    @"EXEC dbo.Question_Delete
+                     @QuestionId = @QuestionId",
+                    new { QuestionId = questionId }
+                    );
+            }
         }
 
         public AnswerGetResponse GetAnswer(int answerId)
@@ -97,7 +104,17 @@ namespace QandA.Data
 
         public AnswerGetResponse PostAnswer(AnswerPostRequet answer)
         {
-            throw new NotImplementedException();
+            using( var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                return connection.QueryFirst<AnswerGetResponse>(
+                    @"EXEC dbo.Answer_Post
+                     @QuestionId = @QuestionId, @Content = @Content,
+                     @UserId = @UserId, @UserName = @UserName,
+                     @Created = @Created",
+                    answer
+                    );
+            }
         }
 
         public QuestionGetSingleResponse PostQuestion(QuestionPostRequest question)
