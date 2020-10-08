@@ -74,7 +74,7 @@ namespace QandA.Data
             {
                 connection.Open();
                 return connection.Query<QuestionGetManyResponse>(
-                      @"EXEC dbo.Questin_GetMany"
+                      @"EXEC dbo.Question_GetMany"
                     );
             }
         }
@@ -85,7 +85,7 @@ namespace QandA.Data
             {
                 connection.Open();
                 return connection.Query<QuestionGetManyResponse>(
-                      @"EXEC dbo.Question_Get_Many_BySearch @Search = @Search",
+                      @"EXEC dbo.Question_GetMany_BySearch @Search = @Search",
                       new { Search = search }
                     );
             }
@@ -102,7 +102,7 @@ namespace QandA.Data
             }
         }
 
-        public AnswerGetResponse PostAnswer(AnswerPostRequet answer)
+        public AnswerGetResponse PostAnswer(AnswerPostFullRequest answer)
         {
             using( var connection = new SqlConnection(_connectionString))
             {
@@ -117,7 +117,7 @@ namespace QandA.Data
             }
         }
 
-        public QuestionGetSingleResponse PostQuestion(QuestionPostRequest question)
+        public QuestionGetSingleResponse PostQuestion(QuestionPostFullRequest question)
         {
             using(var connection = new SqlConnection(_connectionString))
             {
