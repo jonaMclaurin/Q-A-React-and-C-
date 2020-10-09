@@ -12,6 +12,7 @@ namespace QandA.Data
         //GET METHODS
 
         IEnumerable<QuestionGetManyResponse> GetQuestions();
+        IEnumerable<QuestionGetManyResponse> GetQuestionsWithAnswers();
 
         IEnumerable<QuestionGetManyResponse> GetQuestionsBySearch(string search);
 
